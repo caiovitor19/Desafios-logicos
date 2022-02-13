@@ -1,0 +1,128 @@
+#include <stdlib.h>
+#include <stdio.h>
+#define N 8
+#define M 9
+#define U 20
+/*
+A minha logica consiste n seguinte:
+
+ETAPA 01: pegar os codigos pelo usuario(c1 e c2) para verificar np struct pessoa a existencia e o nome correspondente. 
+
+ETAPA 02: Pesquisar os amigos do c1 e c2 e guardar em uma lista auxiliar
+
+ETAPA 03: Fazer uma compração para ver quais são comuns as duas listas e trazer o resultado.
+
+ETAPA 04: organizar o main
+
+*/
+struct pessoa {
+  char   nome[50];
+  int    codigo; 
+};
+
+struct pessoa L[N] = {
+  {"Maria", 27},
+  {"Pedro", 17},
+  {"Ana",   14},
+  {"Ivo",   31},
+  {"Maria", 11},
+  {"Juca",  44},
+  {"Bia",   28},
+  {"Pedro", 51},
+};
+
+struct pessoa X; 
+
+struct amigo {
+int cod1, cod2;
+};
+
+struct amigo T[M] = {
+  {17, 27},
+  {27, 11},
+  {31, 14},
+  {28, 31},
+  {44, 51},
+  {14, 44},
+  {28, 27},
+  {51, 17},
+  {44, 28},
+};
+
+struct amigo Y; 
+
+//declaração das listas auxiliares e seus respectivos tamanhos iniciais 
+ int G[10], Q[10];
+ int g = 0, q = 0;
+
+//=======================ETAPA 02=========================
+void exibir_lista(int a, int b){
+
+//Verificando os nomes de acordo com os codigos:
+for(int i=0; i<N; i++){
+
+  if(L[i].codigo == a){ 
+    printf("%s e", L[i].nome);
+  }   
+  if(L[i].codigo == b){
+    printf(" %s", L[i].nome);
+    } 
+   
+     }
+printf(": ");
+
+}// void
+
+
+//=======================ETAPA 03=========================
+void comparacao(int  *Q, int *G){
+// Usei dois  for que percorrem a lista auxiliar verificando qual codigo está nas duas
+   for(int w = 0; w<g; w++) {
+     for(int y=0; y<q; y++){
+       if(G[w] == Q[y]){
+
+      for(int i=0; i<N; i++){
+          if(L[i].codigo == Q[y]) printf("%s ", L[i].nome);
+        }
+       }
+     }
+   }
+}
+
+
+//====================ETAPA 02============================
+ void pesquisa_ocorrencias(int a, int b){
+
+for(int j=0; j<M; j++){
+//aqui eu estou vendo qual amigo está correspondendo na coluna 01 - guardarei o correspondente (coluna 02) na lista auxiliar G[]
+        if(a == T[j].cod1 || b ==T[j].cod1){  
+
+            G[g] = T[j].cod2; g++;         
+             
+          } if(a == T[j].cod2 || b==T[j].cod2){  
+            Q[q] = T[j].cod1; q++; 
+      }//if
+    }//for 
+    comparacao (Q, G);
+  }
+
+//===================ETAPA 01=============================
+  void dados(){
+      int c1=0, c2=0;
+//um simples codigo para receber od dados do c1 e c2 fornecidos pelo usuario
+    printf("C1: ");  scanf("%d", &c1);
+    
+    printf("C2: ");  scanf("%d", &c2);
+
+    exibir_lista(c1, c2); 
+    pesquisa_ocorrencias(c1, c2); 
+
+}
+//====================ETAPA 04============================
+int main(){
+  system("clear");
+  dados(); 
+}
+
+
+
